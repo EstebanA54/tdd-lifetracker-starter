@@ -7,22 +7,22 @@ class ExpressError extends Error{
 }
 
 class BadRequestError extends ExpressError{
-    constructor(messsage = "Bad Request"){
+    constructor(message = "Bad Request"){
         super(message, 400)
     }
 }
 class UnauthorizedError extends ExpressError{
-    constructor(messsage = "Unauthorized"){
+    constructor(message = "Unauthorized"){
         super(message, 401)
     }
 }
 class ForbiddenError extends ExpressError{
-    constructor(messsage = "Forbidden"){
+    constructor(message = "Forbidden"){
         super(message, 403)
     }
 }
 class NotFoundError extends ExpressError{
-    constructor(messsage = "Not Found"){
+    constructor(message = "Not Found"){
         super(message, 404)
     }
 }

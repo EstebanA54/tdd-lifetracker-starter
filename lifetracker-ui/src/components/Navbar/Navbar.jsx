@@ -5,7 +5,7 @@ import NavLinks from "components/NavLinks/NavLinks";
 
 
 
-export default function Navbar(){
+export default function Navbar(props){
 return(
 <nav className="navbar">
 <div className="logo">
@@ -17,7 +17,7 @@ alt="codepath-logo"
 
 </Link>
 </div>
-<NavLinks/>
+<NavLinks user={props.user} handleLogout={props.handleLogout}/>
 </nav>
 
 )

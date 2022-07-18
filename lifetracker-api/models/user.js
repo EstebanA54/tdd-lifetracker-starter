@@ -11,8 +11,8 @@ class User {
             id: user.id,
             email: user.email,
             username: user.username,
-            firstname: user.firstname,
-            lastname: user.lastname,
+            firstname: user.first_name,
+            lastname: user.last_name,
             createdAt: user.created_at
 
         }
@@ -27,7 +27,7 @@ class User {
                 throw new BadRequestError(`Missing ${field} in request body.`)
             }
         })
-        const user= await User.fetchUserByEmail(credentials)
+        const user= await User.fetchUserByEmail(credentials.email)
         
         if (user){
             const isValid = await bcrypt.compare(credentials.password,user.password)
@@ -46,7 +46,7 @@ class User {
 
     static async register (credentials){
         console.log(credentials)
-        const requiredFields = ["email", "username", "firstname", "lastname", "password", "confirmPassword"]
+        const requiredFields = ["email", "username", "firstname", "lastname", "password"]
         requiredFields.forEach(field => {
             if (!credentials.hasOwnProperty(field))
             {
@@ -80,9 +80,9 @@ class User {
             last_name,
             username
         )
-        VALUES ($1, $2, $3, $4, $5)
+        VALUES ($1, $2, $3, $4,$5)
         RETURNING id, email, username, updated_at, created_at; 
-        `,[lowercasedEmail, hashedPassword, credentials.username,credentials.first_name,credentials.lastname]
+        `,[lowercasedEmail, hashedPassword,credentials.firstname,credentials.lastname,credentials.username]
         )
 
         const user = result.rows[0]
@@ -103,7 +103,20 @@ class User {
 
         return user
     }
-
+    
+    static async fetchUserByUsername(username) {
+        if (!username) {
+          throw new BadRequestError("No username provided")
+        }
+    
+        const query = `SELECT * FROM users WHERE username = $1`
+    
+        const result = await db.query(query, [username])
+    
+        const user = result.rows[0]
+    
+        return user
+      }
 
 
 

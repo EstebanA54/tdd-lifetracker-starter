@@ -1,21 +1,14 @@
 import * as React from "react"
+import { useNavigate, Link} from "react-router-dom"
 import "./ActivityPage.css"
-import AccessForbidden from "components/AccessForbidden/AccessForbidden"
-export default function ActivityPage(user, setAppState) {
-    const isAuthenticated = Boolean(user?.email)
+import AccessForbidden from "../AccessForbidden/AccessForbidden"
+import ActivityFeed from "components/ActivityFeed/ActivityFeed"
 
-    if(isAuthenticated){
-        return(
-            <div className="activity">
-                Activity page
-            </div>
-        )
-    } else {
+export default function ActivityPage({ user, setAppState }) {
         return (
-            <div>
-                <AccessForbidden setAppState={setAppState}/>
+            <div className="activity-page">
+                <h2>Activity Feed</h2>
+                <ActivityFeed user={user}/>
             </div>
         )
-    }
-
 }
